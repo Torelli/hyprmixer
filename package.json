@@ -1,8 +1,8 @@
 {
-  "name": "media-player",
+  "name": "hyprmixer",
   "version": "1.0.0",
   "main": "dist-electron/main/index.js",
-  "description": "A playerctl frontend to control players with style",
+  "description": "A stylish volume mixer and media controller for your hyprland rice",
   "author": "Giovanni Torelli",
   "license": "MIT",
   "private": true,
@@ -20,6 +20,11 @@
     "e2e": "playwright test"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.5.2",
+    "@fortawesome/free-brands-svg-icons": "^6.5.2",
+    "@fortawesome/free-regular-svg-icons": "^6.5.2",
+    "@fortawesome/free-solid-svg-icons": "^6.5.2",
+    "@fortawesome/react-fontawesome": "^0.2.0",
     "electron-updater": "^6.1.8"
   },
   "devDependencies": {
