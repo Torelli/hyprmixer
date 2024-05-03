@@ -1,9 +1,11 @@
-import { app, BrowserWindow, shell, ipcMain } from 'electron'
+import { app, BrowserWindow, shell, ipcMain, IpcMainInvokeEvent } from 'electron'
 import { createRequire } from 'node:module'
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
 import os from 'node:os'
 import { update } from './update'
+import { execSync } from 'node:child_process'
+import Track from '@/model/Track'
 
 const require = createRequire(import.meta.url)
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -70,7 +72,9 @@ async function createWindow() {
   // Test actively push message to the Electron-Renderer
   win.webContents.on('did-finish-load', () => {
     win?.webContents.send('main-process-message', new Date().toLocaleString())
+
   })
+
 
   // Make all links open with the browser, not with the application
   win.webContents.setWindowOpenHandler(({ url }) => {
@@ -82,7 +86,28 @@ async function createWindow() {
   update(win)
 }
 
-app.whenReady().then(createWindow)
+function handleListPlayers() {
+  const players = new TextDecoder('UTF-8').decode(execSync("playerctl --list-all")).split(os.EOL).filter(v => v != "")
+  return players
+}
+
+function handleCurrentTrack(_event: IpcMainInvokeEvent, player: string) {
+  const track: Track = {
+    title: new TextDecoder('UTF-8').decode(execSync(`playerctl metadata xesam:title -p ${player}`)),
+    artist: new TextDecoder('UTF-8').decode(execSync(`playerctl metadata xesam:artist -p ${player}`)),
+    artUrl: new TextDecoder('UTF-8').decode(execSync(`playerctl metadata mpris:artUrl -p ${player}`)),
+    length: new TextDecoder('UTF-8').decode(execSync(`playerctl metadata --format "{{ duration(mpris:length) }}" -p ${player}`)),
+    status: new TextDecoder('UTF-8').decode(execSync(`playerctl status -p ${player}`)),
+    position: new TextDecoder('UTF-8').decode(execSync(`playerctl metadata --format "{{ duration(position) }}" -p ${player}`))
+  }
+  return track
+}
+
+app.whenReady().then(() => {
+  ipcMain.handle('list-players', handleListPlayers)
+  ipcMain.handle('get-current-track', handleCurrentTrack)
+  createWindow()
+})
 
 app.on('window-all-closed', () => {
   win = null

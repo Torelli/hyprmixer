@@ -1,3 +1,4 @@
+import { getCurrentTrack, getPlayers } from '@/service/playerService'
 import { ipcRenderer, contextBridge } from 'electron'
 
 // --------- Expose some API to the Renderer process ---------
@@ -18,9 +19,17 @@ contextBridge.exposeInMainWorld('ipcRenderer', {
     const [channel, ...omit] = args
     return ipcRenderer.invoke(channel, ...omit)
   },
-
   // You can expose other APTs you need here.
   // ...
+})
+
+contextBridge.exposeInMainWorld('playerCtlAPI', {
+  getPlayers() {
+    return ipcRenderer.invoke('list-players')
+  },
+  getCurrentTrack(player: string) {
+    return ipcRenderer.invoke('get-current-track', player)
+  }
 })
 
 // --------- Preload scripts loading ---------
@@ -78,6 +87,7 @@ function useLoading() {
   top: 0;
   left: 0;
   width: 100vw;
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
