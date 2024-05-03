@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useContext, useEffect, useState } from "react";
 import DiscIcon from "../discIcon/DiscIcon";
 import { next, prev, togglePlayPause } from "@/service/playerService";
+import ProgressBar from "./ProgressBar";
 
 export default function Track() {
 	const { track, isDiscMode, setDiscMode, currentPlayer } = useContext(PlayerContext)
@@ -10,6 +11,7 @@ export default function Track() {
 
 	useEffect(() => {
 		setIsPlaying(track?.status == "Playing\n")
+
 	})
 
 	return <div className='pt-12 sm:pt-8 md:p-0 text-white flex flex-col items-center justify-center gap-4'>
@@ -21,10 +23,8 @@ export default function Track() {
 				<h1 className="font-bold text-sm">{track?.title}</h1>
 				<h2 className="text-slate-400 text-xs">{track?.artist}</h2>
 			</div>
-			<div className="pt-1 flex justify-between text-xs border-t-2">
-				<span className="text-slate-400">{track?.position}</span>
-				<span className="text-slate-400">{track?.length}</span>
-			</div>
+			<ProgressBar position={track?.position as string} length={track?.length as string} />
+
 			<div className="min-h-12 sm:min-h-20 text-sm sm:text-lg md:text-2xl flex items-center justify-around">
 				<button onClick={() => prev(currentPlayer)} className="hover:bg-gray-900/60 py-2 px-4 rounded-full focus-visible:outline-white transition-all"><FontAwesomeIcon icon="fa-solid fa-backward-step" /></button>
 				<button onClick={() => togglePlayPause(currentPlayer)} className={`hover:bg-gray-900/60 ${isPlaying ? "py-2 px-4" : "py-3 pl-5 pr-4"} rounded-full focus-visible:outline-white transition-all`}>
