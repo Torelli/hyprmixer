@@ -1,4 +1,4 @@
-import { getCurrentTrack, getPlayers } from '@/service/playerService'
+import { getCurrentTrack, getPlayers, togglePlayPause } from '@/service/playerService'
 import { ipcRenderer, contextBridge } from 'electron'
 
 // --------- Expose some API to the Renderer process ---------
@@ -29,6 +29,15 @@ contextBridge.exposeInMainWorld('playerCtlAPI', {
   },
   getCurrentTrack(player: string) {
     return ipcRenderer.invoke('get-current-track', player)
+  },
+  togglePlayPause(player: string) {
+    ipcRenderer.invoke('play-pause', player)
+  },
+  next(player: string) {
+    ipcRenderer.invoke('next', player)
+  },
+  prev(player: string) {
+    ipcRenderer.invoke('prev', player)
   }
 })
 

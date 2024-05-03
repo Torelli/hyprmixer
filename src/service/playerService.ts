@@ -13,4 +13,16 @@ async function getCurrentTrack(player: string): Promise<Track> {
   return track
 }
 
-export { getPlayers, getCurrentTrack }
+function togglePlayPause(player: string) {
+  window.playerCtlAPI.togglePlayPause(player)
+}
+
+function next(player: string) {
+  window.playerCtlAPI.next(player)
+}
+
+function prev(player: string) {
+  window.playerCtlAPI.prev(player)
+}
+
+export { getPlayers, getCurrentTrack, togglePlayPause, next, prev }

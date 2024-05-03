@@ -5,6 +5,9 @@ import Track from './model/Track'
 export interface IPlayerCtlAPI {
   getPlayers: () => Promise<Array<string>>
   getCurrentTrack: (player: string) => Promise<Track>
+  togglePlayPause: (player: string) => void
+  next: (player: string) => void
+  prev: (player: string) => void
 }
 
 declare global {

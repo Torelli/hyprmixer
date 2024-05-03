@@ -103,9 +103,24 @@ function handleCurrentTrack(_event: IpcMainInvokeEvent, player: string) {
   return track
 }
 
+function handlePlayPause(_event: IpcMainInvokeEvent, player: string) {
+  execSync(`playerctl play-pause -p ${player}`)
+}
+
+function handleNext(_event: IpcMainInvokeEvent, player: string) {
+  execSync(`playerctl next -p ${player}`)
+}
+
+function handlePrev(_event: IpcMainInvokeEvent, player: string) {
+  execSync(`playerctl previous -p ${player}`)
+}
+
 app.whenReady().then(() => {
   ipcMain.handle('list-players', handleListPlayers)
   ipcMain.handle('get-current-track', handleCurrentTrack)
+  ipcMain.handle('play-pause', handlePlayPause)
+  ipcMain.handle('next', handleNext)
+  ipcMain.handle('prev', handlePrev)
   createWindow()
 })
 

@@ -2,9 +2,10 @@ import { PlayerContext } from "@/contexts/PlayerContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useContext, useEffect, useState } from "react";
 import DiscIcon from "../discIcon/DiscIcon";
+import { next, prev, togglePlayPause } from "@/service/playerService";
 
 export default function Track() {
-	const { track, isDiscMode, setDiscMode } = useContext(PlayerContext)
+	const { track, isDiscMode, setDiscMode, currentPlayer } = useContext(PlayerContext)
 	const [isPlaying, setIsPlaying] = useState(track?.status == "Playing\n")
 
 	useEffect(() => {
@@ -25,11 +26,11 @@ export default function Track() {
 				<span className="text-slate-400">{track?.length}</span>
 			</div>
 			<div className="min-h-12 sm:min-h-20 text-sm sm:text-lg md:text-2xl flex items-center justify-around">
-				<button className="hover:bg-gray-900/60 py-2 px-4 rounded-full focus-visible:outline-white transition-all"><FontAwesomeIcon icon="fa-solid fa-backward-step" /></button>
-				<button onClick={() => setIsPlaying(!isPlaying)} className={`hover:bg-gray-900/60 ${isPlaying ? "py-2 px-4" : "py-3 pl-5 pr-4"} rounded-full focus-visible:outline-white transition-all`}>
+				<button onClick={() => prev(currentPlayer)} className="hover:bg-gray-900/60 py-2 px-4 rounded-full focus-visible:outline-white transition-all"><FontAwesomeIcon icon="fa-solid fa-backward-step" /></button>
+				<button onClick={() => togglePlayPause(currentPlayer)} className={`hover:bg-gray-900/60 ${isPlaying ? "py-2 px-4" : "py-3 pl-5 pr-4"} rounded-full focus-visible:outline-white transition-all`}>
 					{isPlaying ? <FontAwesomeIcon icon="fa-solid fa-pause" /> : <FontAwesomeIcon icon="fa-solid fa-play" />}
 				</button>
-				<button className="hover:bg-gray-900/60 py-2 px-4 rounded-full focus-visible:outline-white transition-all"><FontAwesomeIcon icon="fa-solid fa-forward-step" /></button>
+				<button onClick={() => next(currentPlayer)} className="hover:bg-gray-900/60 py-2 px-4 rounded-full focus-visible:outline-white transition-all"><FontAwesomeIcon icon="fa-solid fa-forward-step" /></button>
 			</div>
 		</div>
 	</div >
