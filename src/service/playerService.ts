@@ -7,7 +7,7 @@ async function getPlayers(): Promise<string[]> {
 }
 
 async function getCurrentTrack(player: string): Promise<Track> {
-  if (player == "") return
+  if (player == "") return { title: "", artUrl: "", artist: "", length: "", status: "", position: "" }
   const track = await window.playerCtlAPI.getCurrentTrack(player)
 
   return track
