@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "main": "dist-electron/main/index.js",
   "description": "A stylish volume mixer and media controller for your hyprland rice",
-  "author": "Giovanni Torelli",
-  "email": "giovanni.walter@outlook.com",
+  "author": "Giovanni Torelli <giovanni.walter@outlook.com>",
   "license": "MIT",
   "private": true,
   "debug": {
