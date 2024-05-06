@@ -17,7 +17,6 @@
     "desktop": {
       "Name":"hyprmixer",
       "Comment": "A stylish volume mixer and media controller for your hyprland rice",
-      "Exec":"hyprmixer",
       "StartupNotify": "true",
       "Encoding": "UTF-8",
     },
