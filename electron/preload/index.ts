@@ -38,6 +38,9 @@ contextBridge.exposeInMainWorld('playerCtlAPI', {
   },
   prev(player: string) {
     ipcRenderer.invoke('prev', player)
+  },
+  changePosition(player: string, position: string) {
+    ipcRenderer.invoke('change-position', player, position)
   }
 })
 

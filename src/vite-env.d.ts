@@ -8,6 +8,7 @@ export interface IPlayerCtlAPI {
   togglePlayPause: (player: string) => void
   next: (player: string) => void
   prev: (player: string) => void
+  changePosition: (player: string, position: string) => void
 }
 
 declare global {

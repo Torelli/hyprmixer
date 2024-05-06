@@ -115,12 +115,17 @@ function handlePrev(_event: IpcMainInvokeEvent, player: string) {
   execSync(`playerctl previous -p ${player}`)
 }
 
+function handlePosition(_event: IpcMainInvokeEvent, player: string, position: string) {
+  execSync(`playerctl position ${position} -p ${player}`)
+}
+
 app.whenReady().then(() => {
   ipcMain.handle('list-players', handleListPlayers)
   ipcMain.handle('get-current-track', handleCurrentTrack)
   ipcMain.handle('play-pause', handlePlayPause)
   ipcMain.handle('next', handleNext)
   ipcMain.handle('prev', handlePrev)
+  ipcMain.handle('change-position', handlePosition)
   createWindow()
 })
 

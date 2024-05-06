@@ -25,4 +25,8 @@ function prev(player: string) {
   window.playerCtlAPI.prev(player)
 }
 
-export { getPlayers, getCurrentTrack, togglePlayPause, next, prev }
+function changePosition(player: string, position: string) {
+  window.playerCtlAPI.changePosition(player, position)
+}
+
+export { getPlayers, getCurrentTrack, togglePlayPause, next, prev, changePosition }
