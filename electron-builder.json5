@@ -2,7 +2,8 @@
  * @see https://www.electron.build/configuration/configuration
  */
 {
-  "appId": "YourAppID",
+  "appId": "opensource.torelli.hyprmixer",
+  productName: "hyprmixer",
   "asar": true,
   "directories": {
     "output": "release/${version}"
@@ -11,30 +12,11 @@
     "dist-electron",
     "dist"
   ],
-  "mac": {
-    "artifactName": "${productName}_${version}.${ext}",
-    "target": [
-      "dmg",
-      "zip"
-    ]
-  },
-  "win": {
-    "target": [
-      {
-        "target": "nsis",
-        "arch": [
-          "x64"
-        ]
-      }
-    ],
-    "artifactName": "${productName}_${version}.${ext}"
-  },
-  "nsis": {
-    "oneClick": false,
-    "perMachine": false,
-    "allowToChangeInstallationDirectory": true,
-    "deleteAppDataOnUninstall": false
-  },
+  "linux":{
+  "target": "pacman",
+  "depends": ["playerctl"],
+  "packageName":"hyprmixer",
+  }, 
   "publish": {
     "provider": "generic",
     "channel": "latest",
