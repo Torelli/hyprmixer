@@ -1,11 +1,8 @@
-import * as React from "react"
-
-const DiscIcon = (props) => (
+const DiscIcon = () => (
 	<svg className="absolute"
 		xmlns="http://www.w3.org/2000/svg"
 		fill="none"
 		viewBox="0 0 24 24"
-		{...props}
 	>
 		<circle cx={12} cy={12} r={3} stroke="white" strokeWidth={0.8} />
 		<path
