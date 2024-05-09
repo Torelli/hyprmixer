@@ -20,7 +20,7 @@ jobs:
 
     strategy:
       matrix:
-        os: [macos-latest, ubuntu-latest, windows-latest]
+        os: [ubuntu-latest]
 
     steps:
       - name: Checkout Code
@@ -30,8 +30,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
+
       - name: Install libarchive-tools for pacman build # Related https://github.com/electron-userland/electron-builder/issues/4181
-        if: startsWith(matrix.os, 'ubuntu')
         run: sudo apt-get install libarchive-tools
 
       - name: Install Dependencies
