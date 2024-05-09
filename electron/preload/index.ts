@@ -41,6 +41,12 @@ contextBridge.exposeInMainWorld('playerCtlAPI', {
   },
   changePosition(player: string, position: string) {
     ipcRenderer.invoke('change-position', player, position)
+  },
+  getPlayerVolume(player: string) {
+    ipcRenderer.invoke('get-player-volume', player)
+  },
+  setPlayerVolume(player: string, volume: number) {
+    ipcRenderer.invoke('set-player-volume', player, volume)
   }
 })
 

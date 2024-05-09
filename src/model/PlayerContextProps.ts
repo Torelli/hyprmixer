@@ -1,10 +1,15 @@
 import { Dispatch, SetStateAction } from "react"
 import Track from "./Track"
+import Player from "./Player"
 
 export default interface PlayerContextProps {
-  players: string[] | null
-  currentPlayer: string
+  players: Player[] | null
+  currentPlayer: Player
+  setCurrentPlayer: Dispatch<SetStateAction<Player>>
   track: Track | null
+  setTrack: Dispatch<SetStateAction<Track | null>>
   isDiscMode: boolean
   setDiscMode: Dispatch<SetStateAction<boolean>>
+  isPlayerListOpen: boolean
+  setIsPlayerListOpen: Dispatch<SetStateAction<boolean>>
 }

@@ -19,11 +19,11 @@ function getPositionSeconds(positionPercentage: string, length: string) {
 
 export default function ProgressBar({ position, length }: { position: string, length: string }) {
 	const { currentPlayer } = useContext(PlayerContext)
-	const percentage = position !== undefined && length !== undefined ? getPositionPercentage(position, length) : "0"
+	const percentage = position !== undefined && length !== undefined && length !== "0:00" ? getPositionPercentage(position, length) : "0"
 	return <>
-		<div className="relative w-full group">
-			<input type="range" onChange={(e) => changePosition(currentPlayer, getPositionSeconds(e.target.value, length).toString())} value={percentage} className="absolute w-full h-1 rounded-lg appearance-none cursor-pointer range-sm bg-slate-700 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-2 [&::-webkit-slider-thumb]:w-2 [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:opacity-0 group-hover:[&::-webkit-slider-thumb]:opacity-100 focus-visible:outline-none transition-all" />
-			<div className="absolute h-1 rounded-full bg-white transition-all" style={{ width: percentage + "%" }}></div>
+		<div className="relative w-full h-1 bg-slate-700 rounded-full group">
+			<input type="range" min="0" max="100" onChange={(e) => changePosition(currentPlayer.name, getPositionSeconds(e.target.value, length).toString())} value={percentage} className="z-50 absolute w-full h-1 rounded-lg appearance-none cursor-pointer range-sm bg-transparent [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-2 [&::-webkit-slider-thumb]:w-2 [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:opacity-0 group-hover:[&::-webkit-slider-thumb]:opacity-100 focus-visible:outline-none" />
+			<div className="z-0 absolute h-1 rounded-full bg-white" style={{ width: percentage + "%" }}></div>
 		</div>
 		<div className="flex justify-between text-xs">
 			<span className="text-slate-400">{position}</span>

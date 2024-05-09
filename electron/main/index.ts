@@ -6,6 +6,7 @@ import os from 'node:os'
 import { update } from './update'
 import { execSync } from 'node:child_process'
 import Track from '@/model/Track'
+import Player from '@/model/Player'
 
 const require = createRequire(import.meta.url)
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -87,18 +88,52 @@ async function createWindow() {
 }
 
 function handleListPlayers() {
-  const players = new TextDecoder('UTF-8').decode(execSync("playerctl --list-all")).split(os.EOL).filter(v => v != "")
+  const playerNames = new TextDecoder('UTF-8').decode(execSync("playerctl --list-all")).split(os.EOL).filter(v => v != "")
+  const players: Player[] = []
+  for (let playerName of playerNames) {
+    const status = new TextDecoder('UTF-8').decode(execSync(`playerctl status -p ${playerName}`))
+    const volume = Number(new TextDecoder('UTF-8').decode(execSync(`playerctl volume -p ${playerName}`)))
+    if (status !== "Stopped\n") {
+      players.push({
+        name: playerName,
+        status,
+        volume
+      })
+    }
+
+  }
   return players
 }
 
-function handleCurrentTrack(_event: IpcMainInvokeEvent, player: string) {
+function handleCurrentTrack(_event: IpcMainInvokeEvent, player: Player) {
+  if (player.name === "vlc") {
+    return {
+      title: new TextDecoder('UTF-8').decode(execSync(`playerctl metadata xesam:title -p ${player.name}`)),
+      artist: "Unknow",
+      artUrl: "",
+      length: new TextDecoder('UTF-8').decode(execSync(`playerctl metadata --format "{{ duration(mpris:length) }}" -p ${player.name}`)),
+      status: new TextDecoder('UTF-8').decode(execSync(`playerctl status -p ${player.name}`)),
+      position: "0:00"
+    }
+  }
+
+  if (player.name === "chromium" && player.status === "Stopped\n" || player.name === undefined) {
+    return {
+      title: "",
+      artist: "",
+      artUrl: "",
+      length: "0:00",
+      status: "",
+      position: "0:00"
+    }
+  }
   const track: Track = {
-    title: new TextDecoder('UTF-8').decode(execSync(`playerctl metadata xesam:title -p ${player}`)),
-    artist: new TextDecoder('UTF-8').decode(execSync(`playerctl metadata xesam:artist -p ${player}`)),
-    artUrl: new TextDecoder('UTF-8').decode(execSync(`playerctl metadata mpris:artUrl -p ${player}`)),
-    length: new TextDecoder('UTF-8').decode(execSync(`playerctl metadata --format "{{ duration(mpris:length) }}" -p ${player}`)),
-    status: new TextDecoder('UTF-8').decode(execSync(`playerctl status -p ${player}`)),
-    position: new TextDecoder('UTF-8').decode(execSync(`playerctl metadata --format "{{ duration(position) }}" -p ${player}`))
+    title: new TextDecoder('UTF-8').decode(execSync(`playerctl metadata xesam:title -p ${player.name}`)),
+    artist: new TextDecoder('UTF-8').decode(execSync(`playerctl metadata xesam:artist -p ${player.name}`)),
+    artUrl: new TextDecoder('UTF-8').decode(execSync(`playerctl metadata mpris:artUrl -p ${player.name}`)),
+    length: new TextDecoder('UTF-8').decode(execSync(`playerctl metadata --format "{{ duration(mpris:length) }}" -p ${player.name}`)),
+    status: new TextDecoder('UTF-8').decode(execSync(`playerctl status -p ${player.name}`)),
+    position: new TextDecoder('UTF-8').decode(execSync(`playerctl metadata --format "{{ duration(position) }}" -p ${player.name}`))
   }
   return track
 }
@@ -119,6 +154,10 @@ function handlePosition(_event: IpcMainInvokeEvent, player: string, position: st
   execSync(`playerctl position ${position} -p ${player}`)
 }
 
+function handleSetVolume(_event: IpcMainInvokeEvent, player: string, volume: number) {
+  execSync(`playerctl volume ${volume} -p ${player}`)
+}
+
 app.whenReady().then(() => {
   ipcMain.handle('list-players', handleListPlayers)
   ipcMain.handle('get-current-track', handleCurrentTrack)
@@ -126,6 +165,7 @@ app.whenReady().then(() => {
   ipcMain.handle('next', handleNext)
   ipcMain.handle('prev', handlePrev)
   ipcMain.handle('change-position', handlePosition)
+  ipcMain.handle('set-player-volume', handleSetVolume)
   createWindow()
 })
 
