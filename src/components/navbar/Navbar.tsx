@@ -15,7 +15,6 @@ export default function Navbar() {
 			<span>{isPlayerListOpen ? "Players" : currentPlayer.name.split(".")[0]}</span>
 			<button className="hover:bg-gray-900/60 py-1 px-2 rounded-lg focus-visible:outline-white transition-all"><FontAwesomeIcon icon={faGear} /></button>
 		</div>
-		<PlayerList />
 	</nav>
 
 }
