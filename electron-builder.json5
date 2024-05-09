@@ -12,6 +12,20 @@
     "dist-electron",
     "dist"
   ],
+  linux: {
+    "category": "Multimedia",
+    "executableName":"hyprmixer",
+    "desktop": {
+      "Name":"hyprmixer",
+      "Comment": "A stylish volume mixer and media controller for your hyprland rice",
+      "StartupNotify": "true",
+      "Encoding": "UTF-8",
+    },
+    "target": ["AppImage", "pacman"]
+  },
+  "pacman": {
+    "depends":["playerctl"],
+  },
   "publish": {
     "provider": "generic",
     "channel": "latest",
