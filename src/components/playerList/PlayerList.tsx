@@ -7,7 +7,7 @@ import { useContext, useEffect, useState } from "react"
 
 function PlayerContainer({ player }: { player: Player }) {
 	const { currentPlayer, setCurrentPlayer } = useContext(PlayerContext)
-	const [volume, setVolume] = useState(Math.round(player.volume) * 100)
+	const [volume, setVolume] = useState(Math.round(player.volume * 100))
 	const [isPlaying, setIsPlaying] = useState(player.status === "Playing\n")
 
 	function handleVolumeChange(playerName: string, volume: number) {
