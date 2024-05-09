@@ -33,6 +33,7 @@ jobs:
 
       - name: Install Dependencies
         run: npm install
+        run: sudo apt install libarchive-tools
 
       - name: Build Release Files
         run: npm run build
