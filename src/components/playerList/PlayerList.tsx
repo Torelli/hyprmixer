@@ -18,21 +18,6 @@ function PlayerContainer({ player }: { player: Player }) {
 	}
 
 	function handleTogglePlay() {
-		if (player.name === currentPlayer.name) {
-			if (isPlaying) {
-				setCurrentPlayer({
-					name: currentPlayer.name,
-					volume: currentPlayer.volume,
-					status: "Paused\n"
-				})
-			} else {
-				setCurrentPlayer({
-					name: currentPlayer.name,
-					volume: currentPlayer.volume,
-					status: "Playing\n"
-				})
-			}
-		}
 		setIsPlaying(!isPlaying)
 		togglePlayPause(player.name)
 	}
@@ -91,5 +76,5 @@ export default function PlayerList() {
 		listItems = listPlayers(players)
 	})
 
-	return <ul className="overflow-y-auto mt-16 h-screen w-full">{listItems}</ul>
+	return <ul className="overflow-y-scroll mt-16 h-screen w-full">{listItems}</ul>
 }

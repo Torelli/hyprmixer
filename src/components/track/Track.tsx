@@ -1,6 +1,6 @@
 import { PlayerContext } from "@/contexts/PlayerContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import DiscIcon from "../discIcon/DiscIcon";
 import { next, prev, togglePlayPause } from "@/service/playerService";
 import ProgressBar from "./ProgressBar";
@@ -15,6 +15,10 @@ export default function Track() {
 		togglePlayPause(currentPlayer.name)
 		setIsPlaying(!isPlaying)
 	}
+
+	useEffect(() => {
+		setIsPlaying(track?.status === "Playing\n")
+	}, [track?.status])
 
 	if (track === null) return <div className={`pt-12 sm:pt-8 md:p-0 text-white flex flex-col items-center justify-center gap-4 transition-all`}>
 		<button onClick={() => setDiscMode(!isDiscMode)} className={`drop-shadow-md w-28 h-28 sm:w-32 sm:h-32 md:w-44  md:h-44 focus-visible:outline-white ${isDiscMode ? `border-none animate-spin-slow ${isPlaying ? "hover:pause" : "pause"} rounded-full overflow-hidden` : "border hover:scale-110"} transition-all`}>

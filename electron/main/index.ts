@@ -93,7 +93,7 @@ function handleListPlayers() {
   for (let playerName of playerNames) {
     const status = new TextDecoder('UTF-8').decode(execSync(`playerctl status -p ${playerName}`))
     const volume = Number(new TextDecoder('UTF-8').decode(execSync(`playerctl volume -p ${playerName}`)))
-    if (status !== "Stopped\n") {
+    if (status !== "Stopped\n" && playerName.split(".")[0] !== "kdeconnect") {
       players.push({
         name: playerName,
         status,

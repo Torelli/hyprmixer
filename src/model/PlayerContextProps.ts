@@ -10,6 +10,6 @@ export default interface PlayerContextProps {
   setTrack: Dispatch<SetStateAction<Track | null>>
   isDiscMode: boolean
   setDiscMode: Dispatch<SetStateAction<boolean>>
-  isPlayerListOpen: boolean
-  setIsPlayerListOpen: Dispatch<SetStateAction<boolean>>
+  pageOpened: number
+  setPageOpened: Dispatch<SetStateAction<number>>
 }

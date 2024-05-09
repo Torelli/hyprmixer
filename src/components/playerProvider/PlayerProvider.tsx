@@ -14,7 +14,7 @@ export default function PlayerProvider({ children }: PlayerProviderProps) {
 	const [currentPlayer, setCurrentPlayer] = useState({ name: "No players found", status: "Stopped\n", volume: 0 })
 	const [track, setTrack] = useState(initialTrack as Track | null)
 	const [isDiscMode, setDiscMode] = useState(false)
-	const [isPlayerListOpen, setIsPlayerListOpen] = useState(false)
+	const [pageOpened, setPageOpened] = useState(0)
 
 	useEffect(() => {
 		const interval = setInterval(() => {
@@ -50,7 +50,7 @@ export default function PlayerProvider({ children }: PlayerProviderProps) {
 		return () => clearInterval(interval)
 	})
 	return (
-		<PlayerContext.Provider value={{ players, currentPlayer, setCurrentPlayer, track, setTrack, isDiscMode, setDiscMode, isPlayerListOpen, setIsPlayerListOpen }} >
+		<PlayerContext.Provider value={{ players, currentPlayer, setCurrentPlayer, track, setTrack, isDiscMode, setDiscMode, pageOpened, setPageOpened }} >
 			{children}
 		</PlayerContext.Provider>
 	)
