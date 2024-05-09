@@ -30,10 +30,11 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
+      - name: Install libarchive-tools for pacman build # Related https://github.com/electron-userland/electron-builder/issues/4181
+        run: sudo apt-get install libarchive-tools
 
       - name: Install Dependencies
         run: npm install
-        run: sudo apt install libarchive-tools
 
       - name: Build Release Files
         run: npm run build
