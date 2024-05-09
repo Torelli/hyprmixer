@@ -1,6 +1,6 @@
 {
   "name": "hyprmixer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "dist-electron/main/index.js",
   "description": "A stylish volume mixer and media controller for your hyprland rice",
   "author": "Giovanni Torelli <giovanni.walter@outlook.com>",
