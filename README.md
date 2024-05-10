@@ -27,9 +27,9 @@ npm install
 npm run dev
 ```
 
-## 🐞 Debug
+## 🐞 Hyprmixer with rice!
 
-![electron-vite-react-debug.gif](/electron-vite-react-debug.gif)
+![hyprmixer_overview.gif](/hypermixer_overview.gif)
 
 ## 📂 Directory structure
 
