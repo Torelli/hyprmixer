@@ -24,7 +24,7 @@ yay -S hyprmixer
 ```
 ## Starting
 
-Just run ```sh hypermixer``` on your terminal
+Just run ```hypermixer``` on your terminal
 
 ## Use it with waybar
 
