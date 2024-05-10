@@ -22,6 +22,30 @@ You can either download the AppImage from the [releases page](https://github.com
 ```sh
 yay -S hyprmixer
 ```
+## Starting
+
+Just run ```sh hypermixer``` on your terminal
+
+## Use it with waybar
+
+```json
+"mpris": {
+        "format": "{player_icon}",
+        "format-paused": "{status_icon}",
+        "player-icons": { 
+            "default": "\uf28b",
+            "mpv": "🎵"
+        },
+        "status-icons": {
+            "paused": "\uf144"
+        },
+        "on-click": "hyprmixer",
+        "max-length": 1000,
+        "interval": 1,
+    }
+
+```
+
 ## Contributing
 
 Feel free to send a pull request and lets make hyprmixer even better!
